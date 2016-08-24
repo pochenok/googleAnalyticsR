@@ -41,12 +41,12 @@ dimension_ga4 <- function(vector, histogramBuckets=NULL){
   testthat::expect_type(vector, "character")
   expect_null_or_type(histogramBuckets, "list")
 
-  dimensions <- vapply(vector, checkPrefix, character(1), prefix="ga", USE.NAMES = FALSE)
+  dimensions <- vapply(vector, checkPrefix, character(1), prefix="mcf", USE.NAMES = FALSE)
 
   structure(
     lapply(dimensions, function(x) list(name = x,
                                         histogramBuckets =
-                                          unname(histogramBuckets[gsub("ga:","",x)])
+                                          unname(histogramBuckets[gsub("mcf:","",x)])
                                         )),
     class = "dim_ga4")
 
@@ -68,12 +68,12 @@ metric_ga4 <- function(vector, metricFormat=NULL){
   if(!is.null(names(vector))){
     do_prefix_check <- vector[names(vector) == ""]
     ## metrics may have a named vector so USE.NAMES must be TRUE
-    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
+    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="mcf", USE.NAMES = TRUE)
     metrics <- c(vector[names(vector) != ""], metrics)
   } else {
     do_prefix_check <- vector
     ## metrics may have a named vector so USE.NAMES must be TRUE
-    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="ga", USE.NAMES = TRUE)
+    metrics <- vapply(do_prefix_check, checkPrefix, character(1), prefix="mcf", USE.NAMES = TRUE)
   }
   
   metrics
@@ -133,7 +133,7 @@ order_type <- function(field,
   
   testthat::expect_length(field, 1)
 
-  field <- vapply(field, checkPrefix, character(1), prefix = "ga")
+  field <- vapply(field, checkPrefix, character(1), prefix = "mcf")
 
   structure(
     list(
